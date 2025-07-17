@@ -163,6 +163,7 @@
         
         .modal-content::-webkit-scrollbar {
             width: 8px;
+            height: 8px;
         }
         .modal-content::-webkit-scrollbar-track {
             background: var(--bg-card);
@@ -172,6 +173,19 @@
             border-radius: 10px;
         }
         .modal-content::-webkit-scrollbar-thumb:hover {
+            background-color: var(--text-secondary);
+        }
+        .report-gallery::-webkit-scrollbar {
+            height: 8px;
+        }
+        .report-gallery::-webkit-scrollbar-track {
+            background: var(--bg-dark-navy);
+        }
+        .report-gallery::-webkit-scrollbar-thumb {
+            background-color: var(--border-color);
+            border-radius: 10px;
+        }
+        .report-gallery::-webkit-scrollbar-thumb:hover {
             background-color: var(--text-secondary);
         }
     </style>
@@ -328,7 +342,7 @@
                 shoe: {
                     title: 'FEA of Carbon Fiber Running Shoes',
                     description: 'This project involved an in-depth Finite Element Analysis (FEA) using ANSYS to evaluate the performance and structural integrity of a running shoe augmented with a carbon fiber plate. The study focused on how different running styles (heel-strike vs. forefoot-strike) impact stress distribution on the plate and energy return to the athlete. The goal was to optimize the plate\'s geometry for maximum performance and durability.',
-                    imageCount: 6,
+                    imageCount: 7,
                     imagePrefix: 'project-shoe-detail-'
                 },
                 car: {
@@ -361,39 +375,80 @@
                 card.addEventListener('click', () => {
                     const projectId = card.dataset.projectId;
                     const data = projectsData[projectId];
-                    openModal(data);
+                    openModal(data, projectId);
                 });
             });
 
-            function openModal(data) {
-                // Generate detail images HTML
-                let imagesHTML = '';
-                for (let i = 1; i <= data.imageCount; i++) {
-                    imagesHTML += `
-                        <div class="bg-[var(--bg-dark-navy)] rounded-md overflow-hidden border border-[var(--border-color)]">
-                           <img src="assets/${data.imagePrefix}${i}.jpg" alt="${data.title} - Detail ${i}" class="w-full h-auto object-cover">
+            function openModal(data, projectId) {
+                let contentHTML = '';
+
+                if (projectId === 'shoe') {
+                    const posterHTML = `
+                        <div class="mb-12">
+                            <h4 class="text-2xl font-bold mb-4 text-[var(--accent-cyan)]/90 heading-font">Project Summary Poster</h4>
+                            <div class="bg-[var(--bg-dark-navy)] rounded-md overflow-hidden border border-[var(--border-color)] shadow-lg">
+                                <img src="assets/project-shoe-detail-1.jpg" alt="${data.title} - Summary Poster" class="w-full h-auto object-contain">
+                            </div>
+                        </div>
+                    `;
+
+                    let reportPagesHTML = '';
+                    for (let i = 2; i <= data.imageCount; i++) {
+                        reportPagesHTML += `
+                            <div class="flex-shrink-0 w-full md:w-4/5 lg:w-[70%] bg-[var(--bg-dark-navy)] rounded-md overflow-hidden border border-[var(--border-color)] snap-center">
+                                <img src="assets/${data.imagePrefix}${i}.jpg" alt="${data.title} - Report Page ${i - 1}" class="w-full h-auto object-contain">
+                            </div>
+                        `;
+                    }
+
+                    const reportHTML = `
+                        <div>
+                            <h4 class="text-2xl font-bold mb-4 text-[var(--accent-cyan)]/90 heading-font">Full Report <span class="text-sm text-[var(--text-secondary)] font-sans">(Scroll to view pages)</span></h4>
+                            <div class="report-gallery flex flex-nowrap overflow-x-auto space-x-6 pb-4 snap-x snap-mandatory">
+                                ${reportPagesHTML}
+                            </div>
+                        </div>
+                    `;
+                    
+                    contentHTML = `
+                        <div class="p-6 md:p-10">
+                            <h3 class="text-3xl md:text-4xl font-bold mb-4 section-title">${data.title}</h3>
+                            <p class="text-[var(--text-secondary)] mb-8 text-lg">${data.description}</p>
+                            ${posterHTML}
+                            ${reportHTML}
+                        </div>
+                    `;
+                } else {
+                    // Default grid layout for other projects
+                    let imagesHTML = '';
+                    for (let i = 1; i <= data.imageCount; i++) {
+                        imagesHTML += `
+                            <div class="bg-[var(--bg-dark-navy)] rounded-md overflow-hidden border border-[var(--border-color)]">
+                               <img src="assets/${data.imagePrefix}${i}.jpg" alt="${data.title} - Detail ${i}" class="w-full h-auto object-cover aspect-video">
+                            </div>
+                        `;
+                    }
+
+                    contentHTML = `
+                        <div class="p-8 md:p-12">
+                            <h3 class="text-3xl md:text-4xl font-bold mb-4 section-title">${data.title}</h3>
+                            <p class="text-[var(--text-secondary)] mb-8 text-lg">${data.description}</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                ${imagesHTML}
+                            </div>
                         </div>
                     `;
                 }
 
-                // Populate modal content
-                modalContent.innerHTML = `
-                    <div class="p-8 md:p-12">
-                        <h3 class="text-3xl md:text-4xl font-bold mb-4 section-title">${data.title}</h3>
-                        <p class="text-[var(--text-secondary)] mb-8 text-lg">${data.description}</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            ${imagesHTML}
-                        </div>
-                    </div>
-                `;
+                modalContent.innerHTML = contentHTML;
                 
                 modal.classList.remove('hidden');
                 setTimeout(() => {
                     modal.style.opacity = '1';
                     modalContent.style.transform = 'scale(1)';
-                }, 10); // small delay to allow transition
+                }, 10);
                 
-                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                document.body.style.overflow = 'hidden';
             }
 
             function closeModal() {
@@ -402,19 +457,17 @@
                 setTimeout(() => {
                     modal.classList.add('hidden');
                     document.body.style.overflow = 'auto';
-                }, 300); // match transition duration
+                }, 300);
             }
 
             closeModalBtn.addEventListener('click', closeModal);
 
-            // Close modal on outside click
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     closeModal();
                 }
             });
 
-            // Close modal with Escape key
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
                     closeModal();
