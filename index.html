@@ -5,35 +5,174 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ethan Rednor | Mechanical Engineering Portfolio</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cstyle%3E.e{font-family: 'IBM Plex Mono', monospace, sans-serif;font-size:90px;font-weight:700;fill:%2364FFDA;}%3C/style%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' class='e'%3EE%3C/text%3E%3C/svg%3E">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-dark-navy: #0A192F;
+            --bg-card: #172A45;
+            --border-color: #233554;
+            --text-primary: #CCD6F6;
+            --text-secondary: #8892B0;
+            --accent-cyan: #64FFDA;
+            --accent-cyan-darker: #13A48E;
+            --font-body: 'Inter', sans-serif;
+            --font-heading: 'IBM Plex Mono', monospace;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a0a0a;
-            color: #e5e5e5;
+            font-family: var(--font-body);
+            background-color: var(--bg-dark-navy);
+            background-image:
+                linear-gradient(rgba(136, 146, 176, 0.05) 1px, transparent 1px),
+                linear-gradient(to right, rgba(136, 146, 176, 0.05) 1px, transparent 1px);
+            background-size: 2rem 2rem;
+            color: var(--text-primary);
         }
+
+        h1, h2, h3, .heading-font {
+            font-family: var(--font-heading);
+        }
+
         .section-title {
-            background: linear-gradient(90deg, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--accent-cyan);
         }
-        .project-card:hover .project-image {
+        
+        .blueprint-photo-container {
+            position: relative;
+            border-radius: 4px;
+            background: var(--bg-card);
+            padding: 1.5rem; /* Increased padding for visual balance with circle */
+            transition: all 0.3s ease-in-out;
+            border: 1px solid var(--border-color);
+            aspect-ratio: 1 / 1; /* Enforce square shape */
+        }
+
+        .blueprint-photo-container:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
+        }
+
+        .blueprint-photo-container::before,
+        .blueprint-photo-container::after {
+            content: '';
+            position: absolute;
+            width: 2rem;
+            height: 2rem;
+            border-color: var(--accent-cyan);
+            border-style: solid;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .blueprint-photo-container::before {
+            top: -3px;
+            left: -3px;
+            border-width: 2px 0 0 2px;
+        }
+
+        .blueprint-photo-container::after {
+            bottom: -3px;
+            right: -3px;
+            border-width: 0 2px 2px 0;
+        }
+
+        .blueprint-photo-container img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%; /* Make photo circular */
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .blueprint-photo-container:hover img {
             transform: scale(1.05);
         }
-        /* Custom scrollbar for modal content */
+
+
+        .project-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+
+        .project-image {
+             filter: grayscale(70%);
+             transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+        }
+
+        .skill-tag {
+            background-color: rgba(100, 255, 218, 0.1);
+            color: var(--accent-cyan);
+            font-family: var(--font-heading);
+            font-size: 0.875rem;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-tag:hover {
+            background-color: rgba(100, 255, 218, 0.2);
+            border-color: var(--accent-cyan);
+        }
+
+        .btn-primary {
+            font-family: var(--font-heading);
+            background-color: transparent;
+            color: var(--accent-cyan);
+            border: 1px solid var(--accent-cyan);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.25rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+        }
+        
+        .btn-secondary {
+             font-family: var(--font-heading);
+            background-color: var(--accent-cyan);
+            color: var(--bg-dark-navy);
+            border: 1px solid var(--accent-cyan);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.25rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--accent-cyan-darker);
+            border-color: var(--accent-cyan-darker);
+        }
+        
         .modal-content::-webkit-scrollbar {
             width: 8px;
         }
         .modal-content::-webkit-scrollbar-track {
-            background: #27272a;
+            background: var(--bg-card);
         }
         .modal-content::-webkit-scrollbar-thumb {
-            background-color: #52525b;
+            background-color: var(--border-color);
             border-radius: 10px;
-            border: 3px solid #27272a;
+        }
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background-color: var(--text-secondary);
         }
     </style>
 <link rel="stylesheet" href="/index.css">
@@ -41,33 +180,39 @@
 <body class="antialiased">
 
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 bg-black/50 backdrop-blur-sm z-50">
+    <header class="fixed top-0 left-0 right-0 bg-black/30 backdrop-blur-md z-50 border-b border-gray-800/50">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-xl font-bold tracking-tight">Ethan Rednor</a>
-            <nav class="hidden md:flex space-x-8">
-                <a href="#projects" class="text-gray-300 hover:text-sky-400 transition-colors">Projects</a>
-                <a href="#skills" class="text-gray-300 hover:text-sky-400 transition-colors">Skills</a>
-                <a href="#contact" class="text-gray-300 hover:text-sky-400 transition-colors">Contact</a>
+            <a href="#" class="text-xl heading-font font-bold tracking-wider text-[var(--accent-cyan)]">ER</a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#projects" class="text-[var(--text-primary)] hover:text-[var(--accent-cyan)] transition-colors">Projects</a>
+                <a href="#skills" class="text-[var(--text-primary)] hover:text-[var(--accent-cyan)] transition-colors">Skills</a>
+                <a href="mailto:erednor@gmail.com" class="btn-primary text-sm">Get In Touch</a>
             </nav>
-            <a href="mailto:erednor@gmail.com" class="hidden md:inline-block bg-sky-500 hover:bg-sky-600 text-white font-medium py-2 px-4 rounded-lg transition-colors">Get In Touch</a>
+            <div class="md:hidden">
+                <!-- Mobile menu can be added here if needed -->
+            </div>
         </div>
     </header>
 
     <main class="container mx-auto px-6 pt-24 md:pt-32">
 
         <!-- Hero Section -->
-        <section id="home" class="py-20 md:py-32">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="text-center md:text-left">
-                    <h1 class="text-4xl md:text-6xl font-bold tracking-tighter leading-tight mb-4">Ethan Rednor</h1>
-                    <p class="text-xl md:text-2xl text-gray-400 mb-8">Mechanical Engineering Student at Lehigh University</p>
-                    <p class="text-lg text-gray-300">
-                        Passionate about solving complex mechanical challenges through innovative design, analysis, and manufacturing. Specializing in CAD, FEA, and CAM to bring engineering concepts to life.
+        <section id="home" class="min-h-[calc(100vh-8rem)] flex items-center py-20 md:py-16">
+            <div class="grid md:grid-cols-5 gap-10 lg:gap-20 items-center w-full">
+                <div class="md:col-span-3 text-center md:text-left">
+                    <p class="text-[var(--accent-cyan)] mb-4 heading-font">Hi, my name is</p>
+                    <h1 class="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tighter text-[var(--text-primary)]">Ethan Rednor.</h1>
+                    <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter text-[var(--text-secondary)] mt-2">I build things for the physical world.</h2>
+                    <p class="text-lg text-[var(--text-secondary)] max-w-xl mt-8 mx-auto md:mx-0">
+                        I'm a Mechanical Engineering student at Lehigh University, passionate about solving complex challenges through innovative design, analysis, and manufacturing. Specializing in CAD, FEA, and CAM to bring engineering concepts to life.
                     </p>
+                     <div class="mt-12">
+                         <a href="#projects" class="btn-secondary text-lg">Check out my projects!</a>
+                     </div>
                 </div>
-                <div class="flex justify-center">
-                    <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden ring-4 ring-gray-700 shadow-lg">
-                        <img src="assets/profile-ethan-rednor.jpg" alt="Ethan Rednor" class="w-full h-full object-cover">
+                <div class="md:col-span-2 relative w-full max-w-xs mx-auto md:max-w-full md:mx-0">
+                    <div class="blueprint-photo-container">
+                        <img src="assets/profile-ethan-rednor.jpg" alt="Ethan Rednor Profile Photo" class="relative z-10 w-full h-full object-cover">
                     </div>
                 </div>
             </div>
@@ -75,46 +220,46 @@
 
         <!-- Projects Section -->
         <section id="projects" class="py-24">
-            <h2 class="text-4xl font-bold text-center mb-4 section-title">Projects</h2>
-            <p class="text-center text-lg text-gray-400 mb-16">A selection of my work in design, analysis, and manufacturing.</p>
+            <h2 class="text-3xl font-bold mb-4 section-title relative inline-block">Projects <span class="text-[var(--text-secondary)]">/&gt;</span></h2>
+            <div class="h-px bg-[var(--border-color)] w-full mb-16"></div>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Project Card 1: FEA Shoe -->
-                <div class="project-card bg-gray-900 rounded-xl overflow-hidden shadow-2xl transition-transform duration-300 hover:-translate-y-2 cursor-pointer group" data-project-id="shoe">
+                <div class="project-card rounded-md overflow-hidden shadow-lg cursor-pointer group" data-project-id="shoe">
                     <div class="overflow-hidden h-56">
-                        <img src="assets/project-shoe-main.jpg" alt="FEA of Carbon Fiber Running Shoes" class="project-image w-full h-full object-cover transition-transform duration-300">
+                        <img src="assets/project-shoe-main.jpg" alt="FEA of Carbon Fiber Running Shoes" class="project-image w-full h-full object-cover">
                     </div>
                     <div class="p-6">
-                        <p class="text-sky-400 text-sm font-medium mb-1">Finite Element Analysis</p>
-                        <h3 class="text-xl font-bold mb-2">FEA of Carbon Fiber Running Shoes</h3>
-                        <p class="text-gray-400 text-sm mb-4">ANSYS analysis of a carbon fiber augmented running shoe to study the effects of running styles on performance and material stress.</p>
-                        <span class="font-medium text-white group-hover:text-sky-400 transition-colors">View Details &rarr;</span>
+                        <p class="text-[var(--accent-cyan)] text-sm heading-font mb-2">Finite Element Analysis</p>
+                        <h3 class="text-xl font-bold mb-3 text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors">FEA of Carbon Fiber Running Shoes</h3>
+                        <p class="text-[var(--text-secondary)] text-sm mb-4">ANSYS analysis of a carbon fiber augmented running shoe to study the effects of running styles on performance and material stress.</p>
+                        <span class="font-medium text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors heading-font text-sm">View Details &rarr;</span>
                     </div>
                 </div>
 
                 <!-- Project Card 2: CAD/CAM Race Car -->
-                <div class="project-card bg-gray-900 rounded-xl overflow-hidden shadow-2xl transition-transform duration-300 hover:-translate-y-2 cursor-pointer group" data-project-id="car">
+                <div class="project-card rounded-md overflow-hidden shadow-lg cursor-pointer group" data-project-id="car">
                     <div class="overflow-hidden h-56">
-                        <img src="assets/project-car-main.jpg" alt="SolidWorks CAD/CAM Race Car" class="project-image w-full h-full object-cover transition-transform duration-300">
+                        <img src="assets/project-car-main.jpg" alt="SolidWorks CAD/CAM Race Car" class="project-image w-full h-full object-cover">
                     </div>
                     <div class="p-6">
-                        <p class="text-sky-400 text-sm font-medium mb-1">CAD & CAM</p>
-                        <h3 class="text-xl font-bold mb-2">SolidWorks CAD/CAM Race Car</h3>
-                        <p class="text-gray-400 text-sm mb-4">Design, modeling, and CAM toolpath generation for a race car model using SolidWorks and Mastercam.</p>
-                        <span class="font-medium text-white group-hover:text-sky-400 transition-colors">View Details &rarr;</span>
+                        <p class="text-[var(--accent-cyan)] text-sm heading-font mb-2">CAD & CAM</p>
+                        <h3 class="text-xl font-bold mb-3 text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors">SolidWorks CAD/CAM Race Car</h3>
+                        <p class="text-[var(--text-secondary)] text-sm mb-4">Design, modeling, and CAM toolpath generation for a race car model using SolidWorks and Mastercam.</p>
+                        <span class="font-medium text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors heading-font text-sm">View Details &rarr;</span>
                     </div>
                 </div>
 
                 <!-- Project Card 3: Mechanical Stapler -->
-                <div class="project-card bg-gray-900 rounded-xl overflow-hidden shadow-2xl transition-transform duration-300 hover:-translate-y-2 cursor-pointer group" data-project-id="stapler">
+                <div class="project-card rounded-md overflow-hidden shadow-lg cursor-pointer group" data-project-id="stapler">
                     <div class="overflow-hidden h-56">
-                        <img src="assets/project-stapler-main.jpg" alt="Mechanical Stapler Design" class="project-image w-full h-full object-cover transition-transform duration-300">
+                        <img src="assets/project-stapler-main.jpg" alt="Mechanical Stapler Design" class="project-image w-full h-full object-cover">
                     </div>
                     <div class="p-6">
-                        <p class="text-sky-400 text-sm font-medium mb-1">Mechanical Design</p>
-                        <h3 class="text-xl font-bold mb-2">Mechanical Stapler Design</h3>
-                        <p class="text-gray-400 text-sm mb-4">Complete design and documentation of a mechanical stapler, including part modeling, assembly, and technical drawings.</p>
-                        <span class="font-medium text-white group-hover:text-sky-400 transition-colors">View Details &rarr;</span>
+                        <p class="text-[var(--accent-cyan)] text-sm heading-font mb-2">Mechanical Design</p>
+                        <h3 class="text-xl font-bold mb-3 text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors">Mechanical Stapler Design</h3>
+                        <p class="text-[var(--text-secondary)] text-sm mb-4">Complete design and documentation of a mechanical stapler, including part modeling, assembly, and technical drawings.</p>
+                        <span class="font-medium text-[var(--text-primary)] group-hover:text-[var(--accent-cyan)] transition-colors heading-font text-sm">View Details &rarr;</span>
                     </div>
                 </div>
             </div>
@@ -122,32 +267,32 @@
 
         <!-- Technical Skills Section -->
         <section id="skills" class="py-24">
-            <h2 class="text-4xl font-bold text-center mb-4 section-title">Technical Skills</h2>
-             <p class="text-center text-lg text-gray-400 mb-16">Core competencies and software proficiency.</p>
-            <div class="max-w-4xl mx-auto flex flex-wrap justify-center gap-4">
-                <span class="bg-gray-800 text-gray-300 text-lg font-medium px-5 py-2 rounded-full">SolidWorks</span>
-                <span class="bg-gray-800 text-gray-300 text-lg font-medium px-5 py-2 rounded-full">ANSYS</span>
-                <span class="bg-gray-800 text-gray-300 text-lg font-medium px-5 py-2 rounded-full">FEA</span>
-                <span class="bg-gray-800 text-gray-300 text-lg font-medium px-5 py-2 rounded-full">CAD Modeling</span>
-                <span class="bg-gray-800 text-gray-300 text-lg font-medium px-5 py-2 rounded-full">Mastercam</span>
-                <span class="bg-gray-800 text-gray-300 text-lg font-medium px-5 py-2 rounded-full">Mechanical Design</span>
+            <h2 class="text-3xl font-bold mb-4 section-title relative inline-block">Technical Skills <span class="text-[var(--text-secondary)]">/&gt;</span></h2>
+            <div class="h-px bg-[var(--border-color)] w-full mb-16"></div>
+            <div class="max-w-4xl mx-auto flex flex-wrap justify-center gap-3">
+                <span class="skill-tag">SolidWorks</span>
+                <span class="skill-tag">Mastercam</span>
+                <span class="skill-tag">ANSYS (FEA)</span>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">Matlab</span>
+                <span class="skill-tag">3D Printing</span>
+                <span class="skill-tag">CNC Machining</span>
+                <span class="skill-tag">GD&T</span>
+                <span class="skill-tag">LabVIEW</span>
+                <span class="skill-tag">Arduino</span>
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-24 text-center">
-            <h2 class="text-4xl font-bold mb-4 section-title">Get In Touch</h2>
-            <p class="max-w-2xl mx-auto text-lg text-gray-400 mb-8">
+        <section id="contact" class="py-24 text-center max-w-2xl mx-auto">
+             <p class="text-[var(--accent-cyan)] mb-4 heading-font">What's Next?</p>
+            <h2 class="text-4xl font-bold mb-4 text-[var(--text-primary)]">Get In Touch</h2>
+            <p class="text-[var(--text-secondary)] mb-8">
                 I'm currently seeking new opportunities and would love to hear from you. Feel free to reach out via email or connect with me on social media.
             </p>
             <div class="flex justify-center items-center space-x-6">
-                <a href="mailto:erednor@gmail.com" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-lg transition-colors text-lg">
-                    Email Me
-                </a>
-                <a href="https://www.linkedin.com/in/ethan-rednor/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors">
-                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                    </svg>
+                <a href="mailto:erednor@gmail.com" class="btn-secondary text-lg">
+                    Say Hello
                 </a>
             </div>
         </section>
@@ -155,21 +300,25 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-gray-800 mt-16">
-        <div class="container mx-auto px-6 py-6 text-center text-gray-500">
-            <p>&copy; 2024 Ethan Rednor. All Rights Reserved.</p>
+    <footer class="mt-16">
+        <div class="container mx-auto px-6 py-6 text-center text-[var(--text-secondary)]">
+             <div class="flex justify-center items-center space-x-6 mb-4">
+                 <a href="https://www.linkedin.com/in/ethan-rednor/" target="_blank" rel="noopener noreferrer" class="text-[var(--text-secondary)] hover:text-[var(--accent-cyan)] transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </a>
+            </div>
+            <p class="text-sm heading-font">&copy; 2024 Ethan Rednor. Designed & Built with a custom touch.</p>
         </div>
     </footer>
 
 
     <!-- Project Detail Modal -->
-    <div id="projectModal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
-        <div id="modalContent" class="modal-content bg-gray-900 rounded-xl max-w-5xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl border border-gray-700">
+    <div id="projectModal" class="fixed inset-0 bg-[var(--bg-dark-navy)]/90 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300" style="opacity: 0;">
+        <div id="modalContent" class="modal-content bg-[var(--bg-card)] rounded-lg max-w-5xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl border border-[var(--border-color)] transform scale-95 transition-all duration-300">
             <!-- Content will be injected by JavaScript -->
         </div>
-        <button id="closeModal" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
     </div>
 
 
@@ -180,26 +329,33 @@
                     title: 'FEA of Carbon Fiber Running Shoes',
                     description: 'This project involved an in-depth Finite Element Analysis (FEA) using ANSYS to evaluate the performance and structural integrity of a running shoe augmented with a carbon fiber plate. The study focused on how different running styles (heel-strike vs. forefoot-strike) impact stress distribution on the plate and energy return to the athlete. The goal was to optimize the plate\'s geometry for maximum performance and durability.',
                     imageCount: 6,
-                    imagePrefix: 'assets/project-shoe-detail-'
+                    imagePrefix: 'project-shoe-detail-'
                 },
                 car: {
                     title: 'SolidWorks CAD/CAM Race Car',
                     description: 'A comprehensive project focused on the design and manufacturing of a model race car. The entire vehicle was modeled in SolidWorks, including individual components and the final assembly. Subsequently, Mastercam was used to generate the CAM toolpaths required for CNC machining of the car\'s body, demonstrating a complete workflow from digital design to physical manufacturing preparation.',
                     imageCount: 4,
-                    imagePrefix: 'assets/project-car-detail-'
+                    imagePrefix: 'project-car-detail-'
                 },
                 stapler: {
                     title: 'Mechanical Stapler Design',
                     description: 'This project showcases a complete mechanical design process for a standard office stapler. It involved creating detailed 3D part models for every component in SolidWorks, followed by generating a full assembly with proper mates and constraints. The project concluded with the creation of a full set of technical drawings, including bill of materials (BOM), dimensions, and tolerances, ready for manufacturing.',
                     imageCount: 7,
-                    imagePrefix: 'assets/project-stapler-detail-'
+                    imagePrefix: 'project-stapler-detail-'
                 }
             };
 
             const projectCards = document.querySelectorAll('.project-card');
             const modal = document.getElementById('projectModal');
             const modalContent = document.getElementById('modalContent');
-            const closeModalBtn = document.getElementById('closeModal');
+            
+            // Create and append the close button to the modal once
+            const closeModalBtn = document.createElement('button');
+            closeModalBtn.id = 'closeModal';
+            closeModalBtn.className = 'absolute top-4 right-4 text-[var(--text-secondary)] hover:text-[var(--accent-cyan)] transition-colors z-10';
+            closeModalBtn.innerHTML = `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+            modal.appendChild(closeModalBtn);
+
 
             projectCards.forEach(card => {
                 card.addEventListener('click', () => {
@@ -214,8 +370,8 @@
                 let imagesHTML = '';
                 for (let i = 1; i <= data.imageCount; i++) {
                     imagesHTML += `
-                        <div class="bg-gray-800 rounded-lg overflow-hidden">
-                           <img src="${data.imagePrefix}${i}.jpg" alt="${data.title} - Detail ${i}" class="w-full h-auto object-cover">
+                        <div class="bg-[var(--bg-dark-navy)] rounded-md overflow-hidden border border-[var(--border-color)]">
+                           <img src="assets/${data.imagePrefix}${i}.jpg" alt="${data.title} - Detail ${i}" class="w-full h-auto object-cover">
                         </div>
                     `;
                 }
@@ -224,7 +380,7 @@
                 modalContent.innerHTML = `
                     <div class="p-8 md:p-12">
                         <h3 class="text-3xl md:text-4xl font-bold mb-4 section-title">${data.title}</h3>
-                        <p class="text-gray-300 mb-8 text-lg">${data.description}</p>
+                        <p class="text-[var(--text-secondary)] mb-8 text-lg">${data.description}</p>
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             ${imagesHTML}
                         </div>
@@ -232,12 +388,21 @@
                 `;
                 
                 modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.style.opacity = '1';
+                    modalContent.style.transform = 'scale(1)';
+                }, 10); // small delay to allow transition
+                
                 document.body.style.overflow = 'hidden'; // Prevent background scrolling
             }
 
             function closeModal() {
-                modal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
+                modal.style.opacity = '0';
+                modalContent.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }, 300); // match transition duration
             }
 
             closeModalBtn.addEventListener('click', closeModal);
